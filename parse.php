@@ -7,7 +7,7 @@ $state = 0;
 
 $xml = '';
 
-echo "id\ttitle\trelated\n";
+echo "id\ttitle\trelated\tdoi\tissn\twikidata\n";
 
 $file_handle = fopen($filename, "r");
 while (!feof($file_handle)) 
@@ -65,6 +65,34 @@ while (!feof($file_handle))
 				$related = $node->firstChild->nodeValue;
 			}
 			$row['related'] = $related;
+			
+			// doi
+			$doi = '';
+			
+			$xpath_query = '/mods:mods/mods:identifier[@type="doi"]';
+			$nodeCollection = $xpath->query ($xpath_query);
+			foreach($nodeCollection as $node)
+			{
+				$doi = $node->firstChild->nodeValue;
+			}
+			$row['doi'] = $doi;
+		
+			
+			// issn
+			$issn = '';
+			
+			$xpath_query = '/mods:mods/mods:identifier[@type="issn"]';
+			$nodeCollection = $xpath->query ($xpath_query);
+			foreach($nodeCollection as $node)
+			{
+				$issn = $node->firstChild->nodeValue;
+			}
+			$row['issn'] = $issn;
+			
+			
+			// wikidata
+			$wikidata = '';
+			$row['wikidata'] = $wikidata;
 			
 			//<identifier type="uri">https://www.biodiversitylibrary.org/bibliography/149317</identifier>
 
